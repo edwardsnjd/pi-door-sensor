@@ -10,11 +10,11 @@ Install dependencies: `make install`
 
 Check dependencies: `make check`
 
-Set required configuration via enviroment variables:
+Set required configuration via environment variables:
 ```bash
-export HA_API_TOKEN=""               # long lived API token from HA
-export HA_DEVICE_NAME="garage_door"  # hyphens not permitted
-export HA_DEVICE_FRIENDLY_NAME="Garage door sensor"
+cp .env.sh.example .env.sh
+$EDITOR .env.sh    # edit to supply your specific configuration
+source .env.sh
 ```
 
 Start the monitor: `make start`
