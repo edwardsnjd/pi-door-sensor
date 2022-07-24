@@ -1,0 +1,11 @@
+[Unit]
+Description=SystemD service to keep the pi-door-sensor application running
+After=network.target
+[Service]
+WorkingDirectory=/home/pi/projects/pi-door-sensor
+ExecStart=/home/pi/projects/pi-door-sensor/launch.sh
+Restart=always
+RestartSec=10
+User=pi
+[Install]
+WantedBy=multi-user.target

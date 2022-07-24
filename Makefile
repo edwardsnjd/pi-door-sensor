@@ -8,6 +8,11 @@ SHELL := bash
 MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
 
+# SystemD
+
+PWD := $(shell pwd)
+SERVICE_UNIT_FILE := pi-door-sensor.service
+
 # Targets
 
 start:
@@ -21,7 +26,14 @@ help:
 	@echo "- help = print this help"
 	@echo "- check = check dependencies are available"
 	@echo "- install = install all dependencies"
+	@echo "- service-status = check systemd service status"
+	@echo "- service-install = install systemd service"
+	@echo "- service-start = start systemd service"
+	@echo "- service-stop = stop systemd service"
+	@echo "- service-uninstall = uninstall systemd service"
 .PHONY: help
+
+# Application dependencies
 
 check:
 	@echo "Checking dependencies"
@@ -79,3 +91,26 @@ install:
 		sudo apt-get install python3-requests
 	}
 .PHONY: install
+
+# SystemD service
+
+service-status:
+	sudo systemctl status ${SERVICE_UNIT_FILE}
+.PHONY: service-status
+
+service-install:
+	sudo systemctl link ${PWD}/${SERVICE_UNIT_FILE}
+	sudo systemctl enable ${SERVICE_UNIT_FILE}
+.PHONY: service-install
+
+service-start:
+	sudo systemctl start ${SERVICE_UNIT_FILE}
+.PHONY: service-start
+
+service-stop:
+	sudo systemctl stop ${SERVICE_UNIT_FILE}
+.PHONY: service-disable
+
+service-uninstall:
+	sudo systemctl disable ${SERVICE_UNIT_FILE}
+.PHONY: service-uninstall

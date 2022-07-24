@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3 -u
 
 """
 A script to monitor a switch connected on a particular pin, notifying
