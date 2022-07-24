@@ -19,31 +19,36 @@ from sys import exit
 
 
 # Read env variables
+HA_BASE_URL = environ.get('HA_BASE_URL')
 HA_API_TOKEN = environ.get('HA_API_TOKEN')
 HA_DEVICE_NAME = environ.get('HA_DEVICE_NAME')
 HA_DEVICE_FRIENDLY_NAME = environ.get('HA_DEVICE_FRIENDLY_NAME')
+PIN_NUMBER = environ.get('PIN_NUMBER')
 
 
 # Validate env variables
-if  not HA_DEVICE_FRIENDLY_NAME or \
+if  not HA_BASE_URL or \
+    not HA_DEVICE_FRIENDLY_NAME or \
     not HA_DEVICE_NAME or \
-    not HA_DEVICE_FRIENDLY_NAME:
+    not HA_DEVICE_FRIENDLY_NAME or \
+    not PIN_NUMBER:
     """Print error and fail"""
 
     label = lambda value: "✅" if value else "❌"
 
     print("Error: Missing one or more required environment variables")
+    print("HA_BASE_URL: {}".format(label(HA_BASE_URL)))
     print("HA_API_TOKEN: {}".format(label(HA_API_TOKEN)))
     print("HA_DEVICE_NAME: {}".format(label(HA_DEVICE_NAME)))
     print("HA_DEVICE_FRIENDLY_NAME: {}".format(label(HA_DEVICE_FRIENDLY_NAME)))
+    print("PIN_NUMBER: {}".format(label(PIN_NUMBER)))
 
     exit(1)
 
 
 # Derived constants
-URL = "http://homeassistant.local:8123/api/states/binary_sensor.{}".format(HA_DEVICE_NAME)
+URL = "{}/api/states/binary_sensor.{}".format(HA_BASE_URL, HA_DEVICE_NAME)
 AUTHORIZATION = "Bearer {}".format(HA_API_TOKEN)
-PIN_NUMBER = 'GPIO21'
 
 
 # GPIO wiring
