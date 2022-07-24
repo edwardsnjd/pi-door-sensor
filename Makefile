@@ -27,6 +27,7 @@ help:
 	@echo "- check = check dependencies are available"
 	@echo "- install = install all dependencies"
 	@echo "- service-status = check systemd service status"
+	@echo "- service-logs = follow latest logs for systemd service status"
 	@echo "- service-install = install systemd service"
 	@echo "- service-start = start systemd service"
 	@echo "- service-stop = stop systemd service"
@@ -97,6 +98,10 @@ install:
 service-status:
 	sudo systemctl status ${SERVICE_UNIT_FILE}
 .PHONY: service-status
+
+service-logs:
+	sudo journalctl --unit ${SERVICE_UNIT_FILE} --follow
+.PHONY: service-logs
 
 service-install:
 	sudo systemctl link ${PWD}/${SERVICE_UNIT_FILE}
